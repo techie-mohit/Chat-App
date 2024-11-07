@@ -88,7 +88,7 @@ const EditUserDetails = ({onClose, user}) => {
     <div className='fixed top-0 bottom-0 left-0 right-0 bg-gray-700 bg-opacity-30 flex justify-center items-center z-10 '>
         <div className='bg-white p-4 py-5 m-1 rounded w-full max-w-sm '>
             <h2 className='font-semibold'>Profile Details</h2>
-            <p className='text-sm'>Edit User Details </p>
+            {/* <p className='text-sm'>Edit User Details </p> */}
 
             <form className='grid gap-3 mt-3'  onSubmit={handleSubmit}>
                 <div className='flex flex-col gap-1'>
@@ -103,16 +103,16 @@ const EditUserDetails = ({onClose, user}) => {
 
                 <div>
                   <div>Photo : </div>
-                    <div className='my-1 flex items-center  gap-10'>
+                    <div className='my-1  mt-2flex items-center  gap-10'>
                         <Avatar
-                        width={40}
-                        height={40}
+                        width={60}
+                        height={60}
                         imageUrl = {data?.profile_pic}
                         name= {data?.name}/>
                         <label htmlFor='profile_pic'>
-                        <button className='text-md bg-slate-400 border rounded p-1 hover:bg-slate-600' onClick = {handleOpenUploadPhoto}>
+                        {/* <button className='text-md bg-slate-400 border rounded p-1 hover:bg-slate-600' onClick = {handleOpenUploadPhoto}>
                             Change Photo
-                        </button>
+                        </button> */}
 
                         <input type='file' id= "profile_pic" className='hidden' onChange={handleUploadPhoto} ref={uploadPhoto}/>
                         </label>
@@ -122,7 +122,7 @@ const EditUserDetails = ({onClose, user}) => {
                 <hr className='border-slate-300 w-full '/>
                 <div className='flex gap-2 w-fit ml-auto mt-2'>
                     <button onClick= {onClose} className='bg-primary text-white py-1 px-2 rounded hover:bg-secondary' type='submit'>Cancel</button>
-                    <button onSubmit={handleSubmit} className='bg-primary text-white py-1 px-2 rounded hover:bg-secondary' type='submit'>Save</button>
+                    {/* <button onSubmit={handleSubmit} className='bg-primary text-white py-1 px-2 rounded hover:bg-secondary' type='submit'>Save</button> */}
                 </div>
             </form>
         </div>

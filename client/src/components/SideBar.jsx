@@ -1,12 +1,16 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect } from 'react'
 import { BsChatDotsFill } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
 import { BiLogOut } from "react-icons/bi";
 import Avatar from './Avatar';
-import {useSelector} from 'react-redux';
+import {useSelector , useDispatch} from 'react-redux';
 import EditUserDetails from './EditUserDetails';
 import SearchUser from './SearchUser';
+import { IoImageSharp } from "react-icons/io5";
+import { FaVideo } from "react-icons/fa";
+import { logout } from '../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -18,6 +22,50 @@ const SideBar = () => {
     const [editUserOpen , setEditUserOpen] = useState(false);
     const [allUsers, setAllUsers] = useState([]);
     const [openSearchUser, setOpenSearchUser] = useState(false);
+    const socketConnection = useSelector(state=> state?.user?.socketConnection);  
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(socketConnection){
+            socketConnection.emit('sidebar', user._id);
+            
+            socketConnection.on('conversation', (data)=>{
+                console.log("all users", data);
+
+                const conversationUserData = data.map((conversationUser , index)=>{
+
+                    if(conversationUser?.sender?._id === conversationUser?.receiver?._id){
+                        return {
+                            ...conversationUser,
+                            userDetails: conversationUser?.sender
+                        }
+                    }
+                    else if(conversationUser?.receiver?._id !== user?._id){
+                        return {
+                            ...conversationUser,
+                            userDetails: conversationUser.receiver
+                        }
+                    }
+                    else{
+                        return {
+                            ...conversationUser,
+                            userDetails: conversationUser.sender
+                        }
+                    }
+                })
+                setAllUsers(conversationUserData);
+            })    
+        }
+    },[socketConnection,user])
+
+    const handleLogout = ()=>{
+        dispatch(logout());
+        navigate('/email');
+        localStorage.clear();
+
+    }
+
 
 
 
@@ -46,7 +94,7 @@ const SideBar = () => {
                    
 
                 </button>
-                <button title='logout'className='w-12 h-12 flex justify-center items-center cursor-pointer text-3xl hover:bg-slate-400'>
+                <button title='logout'className='w-12 h-12 flex justify-center items-center cursor-pointer text-3xl hover:bg-slate-400' onClick={handleLogout}>
                     <span className='-ml-2'>
                         <BiLogOut />
                     </span>
@@ -71,6 +119,53 @@ const SideBar = () => {
                         <p className='text-lg text-center text-slate-400 '> Explore users to start a  conversation </p>
                     </div>
                 )
+            }
+            {
+                allUsers.map((conv, index)=>{
+                    return(
+                        <NavLink to = {"/"+conv?.userDetails?._id} key={conv?._id} className='flex items-center gap-2 py-3 px-2 border hover:border-primary rounded hover:bg-slate-100 cursor-pointer'>
+                            <div>
+                                <Avatar
+                                imageUrl = {conv?.userDetails?.profile_pic}
+                                name = {conv?.userDetails?.name}
+                                width={40}
+                                height={40}
+                                />
+                            </div>
+                            <div>
+                                <h3 className='text-ellipsis line-clamp-1 font-semibold text-base'>{conv?.userDetails?.name}</h3>
+                                <div className='text-slate-500 text-xs flex items-center gap-1'>
+                                    <div className='flex items-center gap-1'>
+                                        {
+                                            conv?.lastMsg?.imageUrl && (
+                                                <div className='flex items-center gap-1 '>
+                                                    {!conv?.lastMsg?.text && <span><IoImageSharp /></span>}
+                                                    <span>Image</span>
+                                                </div>
+                                            )
+                                        }
+                                        {
+                                            conv?.lastMsg?.videoUrl && (
+                                                <div className='flex items-center gap-1 '>
+                                                    {!conv?.lastMsg?.text && <span><FaVideo/></span>}
+                                                    <span>Video</span>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                    <p className='text-ellipsis line-clamp-1'>{conv?.lastMsg?.text}</p>
+                                </div>
+                            </div>
+                            {
+                                Boolean(conv?.unseenMsg)  && (
+                                    <p className='text-xs w-5 h-5 flex justify-center items-center ml-auto p-1 bg-primary text-white font-semibold rounded-full'>{conv?.unseenMsg}</p>
+                                )
+                            }
+                            
+
+                        </NavLink>
+                    )
+                })
             }
            </div>
 
