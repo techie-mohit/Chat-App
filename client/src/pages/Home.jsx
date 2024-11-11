@@ -15,7 +15,7 @@ const Home = () => {
   const navigate = useNavigate();
   const location= useLocation();
 
-  console.log("redux user", user);
+  // console.log("redux user", user);
 
   const fetchUserDetails = async()=>{
     try{
@@ -25,7 +25,7 @@ const Home = () => {
         withCredentials: true
       })
 
-      console.log("current user details", response.data);
+      // console.log("current user details", response.data);
 
       dispatch(setUser(response.data.data));
 
@@ -42,7 +42,7 @@ const Home = () => {
       
     }
     catch(error){
-      console.log("error", error)
+      // console.log("error", error)
     }
   }
 
@@ -59,7 +59,7 @@ const Home = () => {
     })
 
     socketConnection.on('onlineUser', (data)=>{
-      console.log(data);
+      // console.log(data);
       dispatch(setOnlineUser(data));
     });
 

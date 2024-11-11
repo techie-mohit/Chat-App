@@ -31,7 +31,7 @@ const CheckEmailPage = () => {
    
 
     const URL =  `${import.meta.env.VITE_BACKENED_URL}/api/email`;
-    console.log("URL", URL);
+    // console.log("URL", URL);
 
     try{
       const response= await axios.post(URL, data);
@@ -50,7 +50,7 @@ const CheckEmailPage = () => {
     }
     catch(error){
       toast.error(error?.response?.data?.message)
-      console.log("error",error);
+      // console.log("error",error);
     }
   }
   return (

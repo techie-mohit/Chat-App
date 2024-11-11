@@ -25,7 +25,7 @@ const onlineUser = new Set();
 
 
 io.on('connection', async(socket) => {
-    console.log("connect User", socket.id);
+    // console.log("connect User", socket.id);
 
     const token  = socket.handshake.auth.token;
 
@@ -40,9 +40,9 @@ io.on('connection', async(socket) => {
     io.emit('onlineUser', Array.from(onlineUser));
 
     socket.on('message-page',async(userId)=>{
-        console.log("userId", userId);
+        // console.log("userId", userId);
         const userDetails = await UserModel.findById(userId).select("-password");
-        console.log("user details ", userDetails)
+        // console.log("user details ", userDetails)
 
         const payload = {
             _id: userDetails?._id,
@@ -140,7 +140,7 @@ io.on('connection', async(socket) => {
     // sidebar
 
     socket.on('sidebar', async(currentUserId)=>{
-        console.log("current user", currentUserId);
+        // console.log("current user", currentUserId);
 
         const conversation = await getConversation(currentUserId);
         socket.emit("conversation", conversation);   
@@ -176,7 +176,7 @@ io.on('connection', async(socket) => {
     // disconnect
     socket.on('disconnect', () => {
         onlineUser.delete(user?._id?.toString());
-        console.log('user disconnected', socket.id);
+        // console.log('user disconnected', socket.id);
     });
 });
 

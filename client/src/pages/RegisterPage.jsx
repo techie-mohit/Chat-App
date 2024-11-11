@@ -34,7 +34,7 @@ const RegisterPage = () => {
     const file = e.target.files[0];
 
     const uploadPhoto = await uploadFile(file);
-    console.log("uploadPhoto", uploadPhoto);
+    // console.log("uploadPhoto", uploadPhoto);
    
     setUploadPhoto(file)
 
@@ -60,7 +60,7 @@ const RegisterPage = () => {
 
     try{
       const response= await axios.post(URL, data);
-      console.log("response" , response);
+      // console.log("response" , response);
 
       toast.success(response.data.message)
       if(response.data.success){
@@ -76,9 +76,9 @@ const RegisterPage = () => {
     }
     catch(error){
       toast.error(error?.response?.data?.message)
-      console.log("error",error);
+      // console.log("error",error);
     }
-    console.log("data ", data)
+    // console.log("data ", data)
   }
   return (
     <div>

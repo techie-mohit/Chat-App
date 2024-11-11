@@ -9,7 +9,7 @@ import { setUser} from '../redux/userSlice';
 
 
 const EditUserDetails = ({onClose, user}) => {
-    console.log("redux  edituser", user);
+    // console.log("redux  edituser", user);
     const [data, setData] = useState({
 
         name: user?.user,
@@ -70,7 +70,7 @@ const EditUserDetails = ({onClose, user}) => {
                 data:data,
                 withCredentials: true
             });
-            console.log("response", response);
+            // console.log("response", response);
             toast.success(response?.data?.message)
 
             if(response.data.success){

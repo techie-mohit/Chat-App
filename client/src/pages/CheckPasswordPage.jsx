@@ -42,7 +42,7 @@ const CheckPasswordPage = () => {
    
 
     const URL =  `${import.meta.env.VITE_BACKENED_URL}/api/password`;
-    console.log("URL", URL);
+    // console.log("URL", URL);
 
     try{
       const response= await axios({
@@ -58,7 +58,7 @@ const CheckPasswordPage = () => {
       toast.success(response.data.message);
 
       if(response.data.success){
-        console.log("data", response);
+        // console.log("data", response);
         dispatch(setToken(response?.data?.token))
         localStorage.setItem("token", response?.data?.token)
         setData({
@@ -70,7 +70,7 @@ const CheckPasswordPage = () => {
     }
     catch(error){
       toast.error(error?.response?.data?.message)
-      console.log("error",error);
+      // console.log("error",error);
     }
 
   }

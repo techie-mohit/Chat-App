@@ -19,7 +19,7 @@ const MessagePage = () => {
  
   const socketConnection = useSelector(state=> state?.user?.socketConnection);  
 
-  console.log("params", params.userId);
+  // console.log("params", params.userId);
   const user = useSelector(state=> state?.user);
   const[dataUser, setDataUser] = useState({
     name:"",
@@ -179,7 +179,7 @@ const MessagePage = () => {
           <div>
             <h3 className='font-semobold text-lg my-0'>{dataUser?.name}</h3>
             <p className=' -my-2'>
-              {dataUser?.online ? <span className='text-green-400'>Online </span>: <span className='text-slate-500'>Offline</span>}
+              {dataUser?.online ? <span className='text-green-400'>Online </span> : <span className='text-slate-500'>Offline</span>}
             </p>
           </div>
         </div>

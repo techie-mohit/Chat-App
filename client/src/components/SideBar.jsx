@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 const SideBar = () => {
     const user = useSelector (state => state?.user);
 
-    console.log("redux user in sidebar", user)
+    // console.log("redux user in sidebar", user)
     const [editUserOpen , setEditUserOpen] = useState(false);
     const [allUsers, setAllUsers] = useState([]);
     const [openSearchUser, setOpenSearchUser] = useState(false);
